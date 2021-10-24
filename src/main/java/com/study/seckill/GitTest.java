@@ -14,6 +14,7 @@ public class GitTest {
         System.out.println("merge test!");
         System.out.println("Hello Git");
         System.out.println("Test Conflict Merge Master!");
+        System.out.println("Test conflict merge -- hot-fix");
     }
 
 }
