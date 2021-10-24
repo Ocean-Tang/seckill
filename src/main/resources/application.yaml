@@ -1,0 +1,116 @@
+spring:
+  # 配置rabbitmq
+  rabbitmq:
+    host: 47.102.208.253
+    username: admin
+    password: admin
+    port: 5672
+    # 虚拟主机
+    virtual-host: /
+    listener:
+      simple:
+        # 消费者最小数量
+        concurrency: 10
+        # 消费者最大数量
+        max-concurrency: 10
+        # 限制消费者每次只处理一条消息，消费完在处理下一跳消息
+        prefetch: 1
+        # 启动时是否默认启动容器，默认为true
+        auto-startup: true
+        # 消费者消费失败自动重新进入队列
+        default-requeue-rejected: true
+    template:
+      retry:
+        # 发布重试，默认false
+        enabled: true
+        # 重试时间，默认1000ms ，1s
+        initial-interval: 1000ms
+        # 最大重试次数，默认3次
+        max-attempts: 3
+        # 重试最大时间间隔，默认10000ms， 10s
+        max-interval: 10000ms
+        # 重试的间隔乘数，以上面为例，如果为2，重试时间一次为10s，20s，40s
+        multiplier: 1
+  web:
+    # 静态资源处理
+    resources:
+      # 启动默认静态资源处理，默认启用
+      add-mappings: true
+      cache:
+        cachecontrol:
+          # 缓存响应时间，单位秒
+          max-age: 3600
+      chain:
+        #资源链启动缓存，默认启动
+        cache: true
+        # 启用资源链，默认禁用
+        enabled: true
+        # 启用压缩资源（gzip, brotli）解析，默认禁用
+        compressed: true
+      # 指定静态资源的目录
+      static-locations: classpath:/static/
+
+  thymeleaf:
+    # 关闭 Thymeleaf 缓存
+    cache: false
+
+    # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/seckill
+    url: jdbc:mysql://47.102.208.253:3306/seckill
+    username: root
+    #password: 123456
+    password: 4FCIW2zs
+    # 连接池配置，MySQL 默认连接池 Hikari
+    hikari:
+      # 连接池名
+      pool-name: DateHikariCP
+      # 最小空闲连接
+      minimum-idle: 10
+      # 空闲连接最大存活时间，默认10分钟
+      idle-timeout: 1800000 # 设置为 30 分钟
+      # 最大连接数， 10个
+      maximum-pool-size: 10
+      # 最大存活时间，0 表示永久存活，默认30 分钟
+      max-lifetime: 1800000
+      # 连接超时时间
+      connection-timeout: 30000 # 30秒（默认）
+      # 测试连接是否可用，心跳测试
+      connection-test-query: SELECT 1
+      validation-timeout: 30000
+
+  # Redis 配置
+  redis:
+    # 阿里云云Redis服务器配置
+    host: 47.102.208.253
+    # 密码
+    password: nng#Rbxc
+    # 数据库: 0,默认为0
+    database: 0
+    # 连接超时时间
+    timeout: 10s
+    # lettuce 配置
+    lettuce:
+      pool:
+        # 最大连接数
+        max-active: 8
+        # 最大等待时间
+        max-wait: 10s
+        # 最大空闲连接, 默认8
+        max-idle: 200
+        # 最小空闲连接，默认0
+        min-idle: 0
+
+# mybatis-plus 配置
+mybatis-plus:
+  # mapper 映射文件
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  # 数据返回类型别名 （默认为类名）
+  type-aliases-package: com.study.seckill.pojo
+
+# 日志配置
+logging:
+  level:
+    # mapper sql语句打印级别
+    com.study.seckill.mapper: debug
