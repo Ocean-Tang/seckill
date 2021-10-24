@@ -16,6 +16,7 @@ public class GitTest {
         System.out.println("Test Conflict Merge Master!");
         System.out.println("Test conflict merge -- hot-fix");
         System.out.println("Push Commit");
+        System.out.println("Pull Commit");
     }
 
 }
